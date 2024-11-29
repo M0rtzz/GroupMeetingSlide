@@ -12,9 +12,9 @@
 
 \author{徐梓航}
 \title{组会}
-\subtitle{第N次}
+\subtitle{第1次}
 \institute{华中科技大学计算机科学与技术学院}
-\date{XXXX年XX月XX日}
+\date{2024年12月02日}
 \usepackage{HUST}
 
 % defs
@@ -49,296 +49,136 @@
 \end{frame}
 
 \begin{frame}
+    \begin{itemize}[<+->] % 当然，除了alert，手动在里面插 \pause 也行
+        \item {工欲善其事，必先利其器}
+        \item {我首先改了一个\LaTeX{} Beamer模板用于今后的组会PPT}
+        \item GitHub 项目地址位于 \url{https://github.com/M0rtzz/GroupMeetingSlide}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
 \section{Introduction}
 
-\begin{frame}{用Beamer很高大上？}
-    \begin{itemize}[<+-| alert@+>] % 当然，除了alert，手动在里面插 \pause 也行
-        \item 大家都会\LaTeX{}，好多学校都有自己的Beamer主题
-        \item 中文支持请选择 Xe\LaTeX{} 编译选项
-        \item Overleaf项目地址位于 \url{https://www.overleaf.com/latex/templates/thu-beamer-theme/vwnqmzndvwyb}，可以直接使用
-        \item GitHub项目地址位于 \url{https://github.com/GohUnTsuan/RUC-Beamer-Theme}，如果有bug或者feature request可以去里面提issue
+\begin{frame}{Can Large Language Models Understand Real-World Complex Instructions?}
+
+    LLMs 难以处理复杂的指令，这些指令可以是需要多个任务和约束的复杂任务描述，也可以是包含长上下文、噪声、异构信息和多回合格式的复杂输入。
+    \newline
+    \newline
+    由于这些特性，LLM常常忽略任务描述中的语义约束，生成错误的格式，违反长度或样本计数约束，并且对输入文本不忠实。
+    \newline
+    \newline
+    现有的基准测试不足以评估LLMs对评估复杂指令的能力，为此，论文提出了CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)。
+
+\end{frame}
+
+\subsection{Complex Instructions}
+
+\begin{frame}
+    Instruction generally consists of two parts:
+    \begin{itemize}
+        \item {Task description (mandatory)}
+        \item {Input text (optional)}
     \end{itemize}
+
+    Two categories of complex instructions:
+    \begin{itemize}
+        \item {complex task descriptions}
+        \item {complex input}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+    Regarding complex task descriptions, models need to undertake multiple tasks and there can be diverse restrictions describing the task:
+    \begin{itemize}
+        \item {semantics constraints}
+        \item {format constraints}
+        \item {quantity constraints}
+    \end{itemize}
+    Regarding complex input, the input text generally have:
+    \begin{itemize}
+        \item {long context}
+        \item {noise}
+        \item {error accumulation caused by pipeline method}
+        \item {heterogeneous information (异构信息) \{e.g. a combination of structured and unstructured data\}}
+        \item {in the form of multi-turn}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \textcolor{red}{The complexity of real-world instructions accounts for prevalent errors observed in LLMs.}
+    \newline
+    LLMs may:
+    \begin{itemize}
+        \item {ignore semantic constraints from task description}
+        \item {generate answers in incorrect format}
+        \item {violate the length or sample count constraints, especially when multiple tasks are required to be performed}
+        \item {models can be unfaithful to the input text, especially when it is long, noisy, heterogeneous or in the form of multi-turn}
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Existing Benchmarks}
+
+\begin{frame}
+    Existing benchmarks are insufficient for effectively assessing the ability of LLMs to understand complex instructions:
+    \begin{itemize}
+        \item {close-ended (封闭式)}
+        \item {contain common and simple instructions, which fail to mirror the complexity of real-world instructions}
+    \end{itemize}
+    They only encompass isolated features:
+    \begin{itemize}
+        \item {count restriction}
+        \item {semantic restriction}
+        \item {long text understanding}
+    \end{itemize}
+    Real-world instructions comprehensively cover these features. Overall, none of the existing benchmarks systematically study the complex instructions understanding ability of LLMs.
 \end{frame}
 
 \section{Challenge}
 
-\subsection{Beamer主题分类}
-
 \begin{frame}
     \begin{itemize}
-        \item 有一些 \LaTeX{} 自带的
-        \item 本模板来源自 \newline \url{https://www.latexstudio.net/archives/4051.html}
-        \item 但是最初的 \href{http://far.tooold.cn/post/latex/beamertsinghua}{\color{purple}{link}} \cite{origin}已经失效了
-        \item 本模板在Trinkle23897的THU-Beamer-Theme基础上修改而成，感谢Trinkle23897同学！\href{https://github.com/Trinkle23897/THU-Beamer-Theme}{\color{red}{戳我}}
+        \item {Complex instructions in real-world scenarios are open-ended, thus the criteria commonly used for close-ended benchmarks are not suitable in such cases.}
+        \item {Many studies adopt GPT4 evaluation for automated open-ended assessment, which introduces bias problems.}
+        \item {The binary pass rate adopted by the benchmarks containing complex instructions is strict and coarsegrained, resulting in universally low scores for smaller LLM without discrimination.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)}
+    \begin{itemize}
+        \item {pioneer}
+        \item {Propose a two-stage framework for constructing the evaluation dataset for LLM’s complex instruction understanding.}
+        \item {Design four evaluation criteria and corresponding automatic metrics for assessing LLMs’ ability to understand complex instructions in a comprehensive and discriminative way.}
+        \item {Tested the benchmark testing framework.}
     \end{itemize}
 \end{frame}
 
 \section{Methods}
 
-\subsection{美化主题}
+\subsection{Related Work}
 
-\begin{frame}{这一份主题与原始的THU Beamer Theme区别在于}
+\begin{frame}{Related Works}
     \begin{itemize}
-        \item 顶栏的小点变成一行而不是多行
-        \item 中文采用楷书
-        \item 更多该模板的功能可以参考 \url{https://www.latexstudio.net/archives/4051.html}
-        \item 下面列举出了一些Beamer的用法，部分节选自 \url{https://tuna.moe/event/2018/latex/}
+        \item {Evaluation for LLMs}
+        \item {Complex Instruction Following}
+        \item {Evaluation for Constrained Instructions}
     \end{itemize}
 \end{frame}
 
-\subsection{如何更好地做Beamer}
+\subsection{CELLO Benchmark}
 
-\begin{frame}{Why Beamer}
-    \begin{itemize}
-        \item \LaTeX 广泛用于学术界，期刊会议论文模板
-    \end{itemize}
-    \begin{table}[h]
-        \centering
-        \begin{tabular}{c|c}
-            Microsoft\textsuperscript{\textregistered}  Word & \LaTeX                     \\
-            \hline
-            文字处理工具                                     & 专业排版软件               \\
-            容易上手，简单直观                               & 容易上手                   \\
-            所见即所得                                       & 所见即所想，所想即所得     \\
-            高级功能不易掌握                                 & 进阶难，但一般用不到       \\
-            处理长文档需要丰富经验                           & 和短文档处理基本无异       \\
-            花费大量时间调格式                               & 无需担心格式，专心作者内容 \\
-            公式排版差强人意                                 & 尤其擅长公式排版           \\
-            二进制格式，兼容性差                             & 文本文件，易读、稳定       \\
-            付费商业许可                                     & 自由免费使用               \\
-        \end{tabular}
-    \end{table}
-\end{frame}
-
-\begin{frame}{排版举例}
-    \begin{exampleblock}{无编号公式} % 加 *
-        \begin{equation*}
-            J(\theta) = \mathbb{E}_{\pi_\theta}[G_t] = \sum_{s\in\mathcal{S}} d^\pi (s)V^\pi(s)=\sum_{s\in\mathcal{S}} d^\pi(s)\sum_{a\in\mathcal{A}}\pi_\theta(a|s)Q^\pi(s,a)
-        \end{equation*}
-    \end{exampleblock}
-    \begin{exampleblock}{多行多列公式\footnote{如果公式中有文字出现，请用 $\backslash$mathrm\{\} 或者 $\backslash$text\{\} 包含，不然就会变成 $clip$，在公式里看起来比 $\mathrm{clip}$ 丑非常多。}}
-        % 使用 & 分隔
-        \begin{align}
-            Q_\mathrm{target} & =r+\gamma Q^\pi(s^\prime, \pi_\theta(s^\prime)+\epsilon)  \\
-            \epsilon          & \sim\mathrm{clip}(\mathcal{N}(0, \sigma), -c, c)\nonumber
-        \end{align}
-    \end{exampleblock}
-\end{frame}
-
-\begin{frame}
-    \begin{exampleblock}{编号多行公式}
-        % Taken from Mathmode.tex
-        \begin{multline}
-            A=\lim_{n\rightarrow\infty}\Delta x\left(a^{2}+\left(a^{2}+2a\Delta x+\left(\Delta x\right)^{2}\right)\right.\label{eq:reset}\\
-                +\left(a^{2}+2\cdot2a\Delta x+2^{2}\left(\Delta x\right)^{2}\right)\\
-                +\left(a^{2}+2\cdot3a\Delta x+3^{2}\left(\Delta x\right)^{2}\right)\\
-                +\ldots\\
-            \left.+\left(a^{2}+2\cdot(n-1)a\Delta x+(n-1)^{2}\left(\Delta x\right)^{2}\right)\right)\\
-            =\frac{1}{3}\left(b^{3}-a^{3}\right)
-        \end{multline}
-    \end{exampleblock}
-\end{frame}
-
-\begin{frame}{图形与分栏}
-    % From thuthesis user guide.
-    \begin{minipage}[c]{0.3\linewidth}
-        \psset{unit=0.8cm}
-        \begin{pspicture}(-1.75,-3)(3.25,4)
-            \psline[linewidth=0.25pt](0,0)(0,4)
-            \rput[tl]{0}(0.2,2){$\vec e_z$}
-            \rput[tr]{0}(-0.9,1.4){$\vec e$}
-            \rput[tl]{0}(2.8,-1.1){$\vec C_{ptm{ext}}$}
-            \rput[br]{0}(-0.3,2.1){$\theta$}
-            \rput{25}(0,0){%
-            \psframe[fillstyle=solid,fillcolor=lightgray,linewidth=.8pt](-0.1,-3.2)(0.1,0)}
-            \rput{25}(0,0){%
-            \psellipse[fillstyle=solid,fillcolor=yellow,linewidth=3pt](0,0)(1.5,0.5)}
-            \rput{25}(0,0){%
-            \psframe[fillstyle=solid,fillcolor=lightgray,linewidth=.8pt](-0.1,0)(0.1,3.2)}
-            \rput{25}(0,0){\psline[linecolor=red,linewidth=1.5pt]{->}(0,0)(0.,2)}
-            %           \psRotation{0}(0,3.5){$\dot\phi$}
-            %           \psRotation{25}(-1.2,2.6){$\dot\psi$}
-            \psline[linecolor=red,linewidth=1.25pt]{->}(0,0)(0,2)
-            \psline[linecolor=red,linewidth=1.25pt]{->}(0,0)(3,-1)
-            \psline[linecolor=red,linewidth=1.25pt]{->}(0,0)(2.85,-0.95)
-            \psarc{->}{2.1}{90}{112.5}
-            \rput[bl](.1,.01){C}
-        \end{pspicture}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.5\linewidth}
-        \medskip
-        %\hspace{2cm}
-        \begin{figure}[h]
-            \centering
-            \includegraphics[height=.4\textheight]{images/figures/dtmf.pdf}
-        \end{figure}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}[fragile]{\LaTeX{} 常用命令}
-    \begin{exampleblock}{命令}
-        \centering
-        \footnotesize
-        \begin{tabular}{llll}
-            \cmd{chapter}   & \cmd{section} & \cmd{subsection} & \cmd{paragraph}       \\
-            章              & 节            & 小节             & 带题头段落            \\\hline
-            \cmd{centering} & \cmd{emph}    & \cmd{verb}       & \cmd{url}             \\
-            居中对齐        & 强调          & 原样输出         & 超链接                \\\hline
-            \cmd{footnote}  & \cmd{item}    & \cmd{caption}    & \cmd{includegraphics} \\
-            脚注            & 列表条目      & 标题             & 插入图片              \\\hline
-            \cmd{label}     & \cmd{cite}    & \cmd{ref}                                \\
-            标号            & 引用参考文献  & 引用图表公式等                           \\\hline
-        \end{tabular}
-    \end{exampleblock}
-    \begin{exampleblock}{环境}
-        \centering
-        \footnotesize
-        \begin{tabular}{lll}
-            \env{table}   & \env{figure}    & \env{equation}    \\
-            表格          & 图片            & 公式              \\\hline
-            \env{itemize} & \env{enumerate} & \env{description} \\
-            无编号列表    & 编号列表        & 描述              \\\hline
-        \end{tabular}
-    \end{exampleblock}
-\end{frame}
-
-\begin{frame}[fragile]{\LaTeX{} 环境命令举例}
-    \begin{minipage}{0.5\linewidth}
-        \begin{lstlisting}[language=TeX]
-\begin{itemize}
-  \item A \item B
-  \item C
-  \begin{itemize}
-    \item C-1
-  \end{itemize}
-\end{itemize}
-\end{lstlisting}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.3\linewidth}
-        \begin{itemize}
-            \item A
-            \item B
-            \item C
-                \begin{itemize}
-                    \item C-1
-                \end{itemize}
-        \end{itemize}
-    \end{minipage}
-    \medskip
-    \pause
-    \begin{minipage}{0.5\linewidth}
-        \begin{lstlisting}[language=TeX]
-\begin{enumerate}
-  \item 国民 \item 表率
-  \item 社会
-  \begin{itemize}
-    \item[n+e] 栋梁
-  \end{itemize}
-\end{enumerate}
-\end{lstlisting}
-    \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.3\linewidth}
-        \begin{enumerate}
-            \item 国民
-            \item 表率
-            \item 社会
-                \begin{itemize}
-                    \item[n+e] 栋梁
-                \end{itemize}
-        \end{enumerate}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}[fragile]{\LaTeX{} 数学公式}
-    \begin{columns}
-        \begin{column}{.55\textwidth}
-            \begin{lstlisting}[language=TeX]
-$V = \frac{4}{3}\pi r^3$
-
-\[
-  V = \frac{4}{3}\pi r^3
-\]
-
-\begin{equation}
-  \label{eq:vsphere}
-  V = \frac{4}{3}\pi r^3
-\end{equation}
-\end{lstlisting}
-        \end{column}
-        \begin{column}{.4\textwidth}
-            $V = \frac{4}{3}\pi r^3$
-            \[
-                V = \frac{4}{3}\pi r^3
-            \]
-            \begin{equation}
-                \label{eq:vsphere}
-                V = \frac{4}{3}\pi r^3
-            \end{equation}
-        \end{column}
-    \end{columns}
-    \begin{itemize}
-        \item 更多内容请看 \href{https://zh.wikipedia.org/wiki/Help:数学公式}{\color{purple}{这里}}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-    \begin{columns}
-        \column{.6\textwidth}
-        \begin{lstlisting}[language=TeX]
-    \begin{table}[htbp]
-      \caption{编号与含义}
-      \label{tab:number}
-      \centering
-      \begin{tabular}{cl}
-        \toprule
-        编号 & 含义 \\
-        \midrule
-        1 & 4.0 \\
-        2 & 3.7 \\
-        \bottomrule
-      \end{tabular}
-    \end{table}
-    公式~(\ref{eq:vsphere}) 的
-    编号与含义请参见
-    表~\ref{tab:number}。
-\end{lstlisting}
-        \column{.4\textwidth}
-        \begin{table}[htpb]
-            \centering
-            \caption{编号与含义}
-            \label{tab:number}
-            \begin{tabular}{cl}\toprule
-                编号 & 含义 \\\midrule
-                1    & 4.0  \\
-                2    & 3.7  \\\bottomrule
-            \end{tabular}
-        \end{table}
-        \normalsize 公式~(\ref{eq:vsphere})的编号与含义请参见表~\ref{tab:number}。
-    \end{columns}
-\end{frame}
-
-\begin{frame}{作图}
-    \begin{itemize}
-        \item 矢量图 eps, ps, pdf
-            \begin{itemize}
-                \item METAPOST, pstricks, pgf $\ldots$
-                \item Xfig, Dia, Visio, Inkscape $\ldots$
-                \item Matlab / Excel 等保存为 pdf
-            \end{itemize}
-        \item 标量图 png, jpg, tiff $\ldots$
-            \begin{itemize}
-                \item 提高清晰度，避免发虚
-                \item 应尽量避免使用
-            \end{itemize}
-    \end{itemize}
-    \begin{figure}[htpb]
-        \centering
-        \includegraphics[width=0.2\linewidth]{images/templates/HUST_LOGO.eps}
-        \caption{这个校徽就是矢量图}
-    \end{figure}
+\begin{frame}{Dataset Construction}
+    Diversify the collected complex instructions through In-breadth Evolution and complicate the collected simple instructions through In-breadth Evolution.
+    \newline
+    \newline
+    \large\bfseries{Data Source and Selected Tasks}
+    \newline
+    Include common NLP tasks found in existing benchmarks, while incorporating instructions with more complex task descriptions or input beyond those benchmarks.
 \end{frame}
 
 \section{Experiment}
