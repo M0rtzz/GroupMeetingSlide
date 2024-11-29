@@ -28,7 +28,7 @@
 \lstset{
     basicstyle=\ttfamily\small,
     keywordstyle=\bfseries\color{deepblue},
-    emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+    emphstyle=\ttfamily\color{deepred}, % Custom highlighting style
     stringstyle=\color{deepgreen},
     numbers=left,
     numberstyle=\small\color{halfgray},
@@ -49,7 +49,7 @@
 \end{frame}
 
 \begin{frame}
-    \begin{itemize}[<+->]
+    \begin{itemize}[<+->] % 当然，除了这样，手动在里面插 \pause 也行
         \item {工欲善其事，必先利其器}
         \item {我首先改了一个\LaTeX{} Beamer模板用于今后的组会PPT}
         \item GitHub 项目地址位于 \url{https://github.com/M0rtzz/GroupMeetingSlide}
@@ -178,14 +178,134 @@
     \large\bfseries{Data Source and Selected Tasks}
     \newline
     \normalfont
-    Include common NLP tasks found in existing benchmarks, while incorporating instructions with more complex task descriptions or input beyond those benchmarks. CELLO include nine tasks, classified into six categories:
+    Include common NLP tasks found in existing benchmarks, while incorporating instructions with more complex task descriptions or input beyond those benchmarks.
+\end{frame}
+
+\begin{frame}{Dataset Construction}
+    CELLO include nine tasks, classified into six categories:
     \begin{itemize}
         \item {Complex NLP Tasks}
+            \begin{itemize}
+                \item {long text summarization}
+                \item {long text closed-domain question answering}
+                \item {long text keywords extraction}
+                \item {complex information extraction}
+            \end{itemize}
         \item {Meta-prompt}
         \item {Planning}
         \item {Structured Input}
         \item {Well-guided Writing}
         \item {Detailed Brainstorming}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dataset Construction}
+    \large\bfseries{Data Evolution}
+    \newline
+    \normalfont
+    The collected complex instructions have two limitations:
+    \begin{itemize}
+        \item {For those collected from real-world projects, the human-elaborated task descriptions are complex but alike.}
+        \item {For those collected from usage logs, many simple instructions are not effectively utilized.}
+    \end{itemize}
+    Introduce two perspectives to evolve data, thereby achieving a more robust and reliable evaluation:
+    \begin{itemize}
+        \item {In-breadth Evolution (Aims to diversify the collected complex instructions)}
+            \begin{itemize}
+                \item {task description relocation}
+                \item {task description paraphrasing}
+                \item {task emulation}
+            \end{itemize}
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dataset Construction}
+    \begin{itemize}
+        \item {In-depth Evolution (Aims to complicate the simple instructions to increase the data scale)}
+            \begin{itemize}
+                \item {constraints addition}
+                \item {multi-round interaction}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Criteria}
+    \newline
+    \normalfont
+    Encompass common errors made by models:
+    \begin{itemize}
+        \item {count limit}
+        \item {answer format}
+        \item {task-prescribed phrases}
+        \item {input-dependent query}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Evaluation Metrics}
+    \newline
+    \normalfont
+    每个样本$s_i$由指令$I_i$、模型答案$a_i$和给定的历史$h_i$组成，其中$h_i$是多轮对话中的前几轮$\{(I_0, a_0'), ..., (I_i−1', a_i−1')\}$。对于每个样本$s$，其每个标准的分数由多个子分数$C$组成，$C$是一个包含$\{c_1, c_2, ..., c_i\}$的集合。
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Count Limit}
+    \newline
+    \normalfont
+    Four sub-scores:
+    \begin{itemize}
+        \item {word count score}
+        \item {sentence count score}
+        \item {sample count score}
+        \item {revise score}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Answer Format}
+    \newline
+    \normalfont
+    Two sub-scores:
+    \begin{itemize}
+        \item {parseability (模型输出是否可解析，取0或1)}
+        \item {keywords (计算模型输出中包含的关键词数量后/总数)}
+    \end{itemize}
+    最终两者求均值。
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Input-dependent Query}
+    \newline
+    \normalfont
+    Two sub-scores:
+    \begin{itemize}
+        \item {keywords($f_{keywords}(a_i, l_q)$, the scoring keywords $l_q$ are extracted from input text)}
+        \item {COPYBLEU (值随着模型输出与输入文本相似度的增加而减少，即如果模型输出与输入文本过于相似，COPYBLEU的值会较低，从而对最终得分产生负面影响)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation System}
+    \large\bfseries{Task-prescribed Phrases}
+    \newline
+    \normalfont
+    The more mandatory phrases covered in the answers, the better the model follows complex instructions.
+    \newline
+    \newline
+    Keywords($f_{keywords}(a_i, l_t)$) is applied where $l_t$ is the scoring keywords extracted from the task description.
+\end{frame}
+
+\begin{frame}{Evaluation of the Benchmark}
+    根据四个标准，每个样本由三个annotators标记。具体地说，只有当至少两个annotators在标准计数限制和输出格式可解析性上达成一致时，我们才保留样本。对于涉及关键字覆盖率的标准，我们只保留至少两个annotators一致同意的关键字。
+\end{frame}
+
+\begin{frame}{Statistics of the Benchmark}
+    \begin{itemize}
+        \item {Dataset has two categories depending on whether the criteria are mainly in the task description or the input text.}
+        \item {CELLO benchmark is the first to systematically test LLMs' ability to follow complex instructions, which are generally longer and more complex than other benchmarks}
+        \item {The tasks we cover are open-ended, which are more realistic and practical.}
+        \item {Evaluation is also more objective and fine-grained.}
     \end{itemize}
 \end{frame}
 
