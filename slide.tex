@@ -10,6 +10,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{xeCJK}
 \usepackage{HUST}
 
 \author{徐梓航}
@@ -37,7 +38,7 @@
 }
 
 \begin{document}
-\kaishu
+\setCJKfamilyfont{hei}{SimHei}
 
 \begin{frame}
     \titlepage
@@ -71,7 +72,7 @@
     \begin{itemize}
         \item 有一些 \LaTeX{} 自带的
         \item 本模板来源自 \newline \url{https://www.latexstudio.net/archives/4051.html}
-        \item 但是最初的 \href{http://far.tooold.cn/post/latex/beamertsinghua}{\color{purple}{link}} \cite{origin}已经失效了
+        \item 但是最初的 \href{http://far.tooold.cn/post/latex/beamertsinghua}{\color{purple}{link}} 已经失效了
         \item 本模板在Trinkle23897的THU-Beamer-Theme基础上修改而成，感谢Trinkle23897同学！\href{https://github.com/Trinkle23897/THU-Beamer-Theme}{\color{red}{戳我}}
     \end{itemize}
 \end{frame}
@@ -141,7 +142,7 @@
 \end{frame}
 
 \begin{frame}{图形与分栏}
-    \begin{minipage}[c]{0.3\linewidth}
+    \begin{minipage}[c]{0.4\linewidth}
         \psset{unit=0.8cm}
         \begin{pspicture}(-1.75,-3)(3.25,4)
             \psline[linewidth=0.25pt](0,0)(0,4)
@@ -165,7 +166,7 @@
             \rput[bl](.1,.01){C}
         \end{pspicture}
     \end{minipage}\hspace{1cm}
-    \begin{minipage}{0.5\linewidth}
+    \begin{minipage}{0.4\linewidth}
         \medskip
         % \hspace{2cm}
         \begin{figure}[h]
@@ -298,7 +299,7 @@ $V = \frac{4}{3}\pi r^3$
         \bottomrule
       \end{tabular}
     \end{table}
-    公式~(\ref{eq:vsphere}) 的
+    公式~(\ref{eq:vsphere})的
     编号与含义请参见
     表~\ref{tab:number}。
 \end{lstlisting}
