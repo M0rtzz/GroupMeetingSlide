@@ -152,8 +152,8 @@
 \begin{frame}{CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)}
     \begin{itemize}
         \item {pioneer}
-        \item {Propose a two-stage framework for constructing the evaluation dataset for LLM’s complex instruction understanding.}
-        \item {Design four evaluation criteria and corresponding automatic metrics for assessing LLMs’ ability to understand complex instructions in a comprehensive and discriminative way.}
+        \item {Propose a two-stage framework for constructing the evaluation dataset for LLM's complex instruction understanding.}
+        \item {Design four evaluation criteria and corresponding automatic metrics for assessing LLMs' ability to understand complex instructions in a comprehensive and discriminative way.}
         \item {Tested the benchmark testing framework.}
     \end{itemize}
 \end{frame}
@@ -311,12 +311,54 @@
 
 \section{Experiment}
 
-\begin{frame}
+\begin{frame}{Evaluated Models}
+    These models are categorized into three groups:
     \begin{itemize}
-        \item 一月：完成文献调研
-        \item 二月：复现并评测各种Beamer主题美观程度
-        \item 三、四月：美化THU Beamer主题
-        \item 五月：论文撰写
+        \item {Chinese-oriented Models (From Scratch, FS) \{Trained entirely from scratch using Chinese corpora\}}
+        \item {Chinese-oriented Models (Continue Pretraining, CP) \{Continue pretraining on Chinese corpora utilizing an English-oriented base model\}}
+        \item {English-oriented Models}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Task-categorized Performance}
+    \begin{itemize}
+        \item {General Comparisons}
+            \begin{itemize}
+                \item {Complex instruction comprehension is not language-dependent.}
+                \item {There is a strong correlation between the ability to comprehend complex instructions and the instruction.}
+            \end{itemize}
+        \item {Complex Task Description}
+            \begin{itemize}
+                \item {The ability to understand complex task descriptions can transfer across different languages.}
+                \item {The supported text context length does not significantly impact the ability to comprehend complex task descriptions.}
+            \end{itemize}
+        \item {Complex Input Text}
+            \begin{itemize}
+                \item {More Chinese training data assists the models in comprehending long and noisy Chinese texts.}
+                \item {Within \textcolor{red}{the same model series}, larger scales generally improve performance, while longer supported context length can result in performance drops in many cases.}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Criteria-categorized Performance}
+    \begin{itemize}
+        \item {Regarding \textcolor{red}{Answer format}, the English-oriented Models significantly perform better than Chinese-oriented Models. This demonstrates the English-oriented Models' ability to follow few-shot examples and generate code, as well as partially explains why their complex instruction-following ability can transfer across languages.}
+        \item {For \textcolor{red}{Task-prescribed phrases}, Chinese data helps the models understand Chinese semantic restrictions.}
+        \item {Finally, the performance differences between models for \textcolor{red}{Count limit} criteria are not big compared to other criteria, which shows that the models have similar comprehension of numerical concepts.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Comparisons between Benchmarks}
+    \begin{itemize}
+        \item {On benchmarks focusing on Chinese knowledge (C-eval, CMMLU, and GAOKAO), smaller models achieve similar or even better performance compared to GPT-3.5-turbo.}
+        \item {On challenging benchmarks like complex reasoning (BBH, GSM8k) and programming ability (HumanEval), there is a lack of distinction between smaller models.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Fine-grained Evaluation}
+    \begin{itemize}
+        \item {Different models have different strengths for different criteria.}
+        \item {Different models also excel in specific tasks.}
     \end{itemize}
 \end{frame}
 
@@ -324,10 +366,9 @@
 
 \begin{frame}
     \begin{itemize}
-        \item 一月：完成文献调研
-        \item 二月：复现并评测各种Beamer主题美观程度
-        \item 三、四月：美化THU Beamer主题
-        \item 五月：论文撰写
+        \item {complex instructions following ability of LLMs}
+        \item {CELLO Benchmark}
+        \item {Conduct extensive experiments to compare the performance of representative models.}
     \end{itemize}
 \end{frame}
 
