@@ -1,23 +1,23 @@
-% this template mostly comes from Trinkle23897
-% his github repo is https://github.com/Trinkle23897/THU-Beamer-Theme
-% thanks a lot Trinkle!
+% !TEX program = XeLaTeX
+% !TEX encoding = UTF-8
+% @brief: group meeting slide
+% @author: Zihang Xu
+% @reference:
+% @date: 2024-12-02
 
 \documentclass{beamer}
 \usepackage{ctex, hyperref}
 \usepackage[T1]{fontenc}
-
-% other packages
 \usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{HUST}
 
 \author{徐梓航}
 \title{组会}
 \subtitle{第1次}
 \institute{华中科技大学计算机科学与技术学院}
 \date{2024年12月02日}
-\usepackage{HUST}
 
-% defs
 \def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
 \def\env#1{\texttt{\color{blue}\footnotesize #1}}
 \definecolor{deepblue}{rgb}{0,0,0.5}
@@ -28,7 +28,7 @@
 \lstset{
     basicstyle=\ttfamily\small,
     keywordstyle=\bfseries\color{deepblue},
-    emphstyle=\ttfamily\color{deepred}, % Custom highlighting style
+    emphstyle=\ttfamily\color{deepred},
     stringstyle=\color{deepgreen},
     numbers=left,
     numberstyle=\small\color{halfgray},
@@ -37,8 +37,8 @@
 }
 
 \begin{document}
-
 \kaishu
+
 \begin{frame}
     \titlepage
     \begin{figure}[htpb]
@@ -63,7 +63,6 @@
 \section{Introduction}
 
 \begin{frame}{Can Large Language Models Understand Real-World Complex Instructions?}
-
     LLMs 难以处理复杂的指令，这些指令可以是需要多个任务和约束的复杂任务描述，也可以是包含长上下文、噪声、异构信息和多回合格式的复杂输入。
     \newline
     \newline
@@ -92,7 +91,6 @@
 \end{frame}
 
 \begin{frame}
-
     Regarding complex task descriptions, models need to undertake multiple tasks and there can be diverse restrictions describing the task:
     \begin{itemize}
         \item {semantics constraints}
