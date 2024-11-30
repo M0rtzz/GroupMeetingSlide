@@ -1,23 +1,23 @@
-% this template mostly comes from Trinkle23897
-% his github repo is https://github.com/Trinkle23897/THU-Beamer-Theme
-% thanks a lot Trinkle!
+% !TEX program = XeLaTeX
+% !TEX encoding = UTF-8
+% @brief: group meeting slide
+% @author: Zihang Xu
+% @reference: https://github.com/latexstudio/HUST-Beamer-Theme
+% @date: XXXX-XX-XX
 
 \documentclass{beamer}
 \usepackage{ctex, hyperref}
 \usepackage[T1]{fontenc}
-
-% other packages
 \usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{HUST}
 
 \author{徐梓航}
 \title{组会}
 \subtitle{第N次}
 \institute{华中科技大学计算机科学与技术学院}
 \date{XXXX年XX月XX日}
-\usepackage{HUST}
 
-% defs
 \def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
 \def\env#1{\texttt{\color{blue}\footnotesize #1}}
 \definecolor{deepblue}{rgb}{0,0,0.5}
@@ -28,7 +28,7 @@
 \lstset{
     basicstyle=\ttfamily\small,
     keywordstyle=\bfseries\color{deepblue},
-    emphstyle=\ttfamily\color{deepred}, % Custom highlighting style
+    emphstyle=\ttfamily\color{deepred},
     stringstyle=\color{deepgreen},
     numbers=left,
     numberstyle=\small\color{halfgray},
@@ -37,8 +37,8 @@
 }
 
 \begin{document}
-
 \kaishu
+
 \begin{frame}
     \titlepage
     \begin{figure}[htpb]
@@ -114,13 +114,12 @@
 \end{frame}
 
 \begin{frame}{排版举例}
-    \begin{exampleblock}{无编号公式} % 加 *
+    \begin{exampleblock}{无编号公式}
         \begin{equation*}
             J(\theta) = \mathbb{E}_{\pi_\theta}[G_t] = \sum_{s\in\mathcal{S}} d^\pi (s)V^\pi(s)=\sum_{s\in\mathcal{S}} d^\pi(s)\sum_{a\in\mathcal{A}}\pi_\theta(a|s)Q^\pi(s,a)
         \end{equation*}
     \end{exampleblock}
     \begin{exampleblock}{多行多列公式\footnote{如果公式中有文字出现，请用 $\backslash$mathrm\{\} 或者 $\backslash$text\{\} 包含，不然就会变成 $clip$，在公式里看起来比 $\mathrm{clip}$ 丑非常多。}}
-        % 使用 & 分隔
         \begin{align}
             Q_\mathrm{target} & =r+\gamma Q^\pi(s^\prime, \pi_\theta(s^\prime)+\epsilon)  \\
             \epsilon          & \sim\mathrm{clip}(\mathcal{N}(0, \sigma), -c, c)\nonumber
@@ -130,7 +129,6 @@
 
 \begin{frame}
     \begin{exampleblock}{编号多行公式}
-        % Taken from Mathmode.tex
         \begin{multline}
             A=\lim_{n\rightarrow\infty}\Delta x\left(a^{2}+\left(a^{2}+2a\Delta x+\left(\Delta x\right)^{2}\right)\right.\label{eq:reset}\\
                 +\left(a^{2}+2\cdot2a\Delta x+2^{2}\left(\Delta x\right)^{2}\right)\\
@@ -143,7 +141,6 @@
 \end{frame}
 
 \begin{frame}{图形与分栏}
-    % From thuthesis user guide.
     \begin{minipage}[c]{0.3\linewidth}
         \psset{unit=0.8cm}
         \begin{pspicture}(-1.75,-3)(3.25,4)
