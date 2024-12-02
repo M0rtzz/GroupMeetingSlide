@@ -6,11 +6,24 @@
 % @date: XXXX-XX-XX
 
 \documentclass{beamer}
-\usepackage{ctex, hyperref}
 \usepackage[T1]{fontenc}
-\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
-\usepackage{graphicx,pstricks,listings,stackengine}
-\usepackage{xeCJK}
+\usepackage{
+    ctex,
+    xeCJK,
+    xcolor,
+    amsmath,
+    caption,
+    booktabs,
+    calligra,
+    hyperref,
+    graphicx,
+    latexsym,
+    listings,
+    multicol,
+    multirow,
+    pstricks,
+    stackengine
+}
 \usepackage{HUST}
 
 \author{徐梓航}
@@ -342,6 +355,7 @@ $V = \frac{4}{3}\pi r^3$
     \begin{figure}[htpb]
         \centering
         \includegraphics[width=0.2\linewidth]{images/templates/HUST_LOGO.eps}
+        \captionsetup{font={small}}
         \caption{这个校徽就是矢量图}
     \end{figure}
 \end{frame}
