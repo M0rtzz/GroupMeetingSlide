@@ -8,6 +8,10 @@ papers/src/*
 !papers/src/.gitkeep
 !papers/src/*.tar.gz
 
+tables/*
+!tables/.gitkeep
+!tables/*.tex
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
