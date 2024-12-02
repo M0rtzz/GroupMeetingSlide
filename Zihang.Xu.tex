@@ -10,6 +10,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{multirow}
+\usepackage{caption}
 \usepackage{xeCJK}
 \usepackage{HUST}
 
@@ -106,15 +108,19 @@
 \end{frame}
 
 \begin{frame}
-    \textcolor{red}{The complexity of real-world instructions accounts for prevalent errors observed in LLMs.}
-    \newline
-    LLMs may:
+    \textcolor{red}{The complexity of real-world instructions accounts for prevalent errors observed in LLMs.} LLMs May:
     \begin{itemize}
         \item {Ignore semantic constraints from task description.}
         \item {Generate answers in incorrect format.}
         \item {Violate the length or sample count constraints, especially when multiple tasks are required to be performed.}
         \item {Models can be unfaithful to the input text, especially when it is long, noisy, heterogeneous or in the form of multi-turn.}
     \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.39\textheight]{./images/figures/intro_v1.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Real-world applications often involve a diverse range of complex instructions.}
+    \end{figure}
 \end{frame}
 
 \subsection{Existing Benchmarks}
@@ -243,6 +249,12 @@
     \newline
     \normalfont
     每个样本$s_i$由指令$I_i$、模型答案$a_i$和给定的历史$h_i$组成，其中$h_i$是多轮对话中的前几轮$\{(I_0, a_0'), ..., (I_i−1', a_i−1')\}$。对于每个样本$s$，其每个标准的分数由多个子分数$C$组成，$C$是一个包含$\{c_1, c_2, ..., c_i\}$的集合。
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.43\textheight]{./images/figures/framework.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Eight features for complex instructions, an evaluation dataset covering nine tasks, four evaluation criteria along with their corresponding metrics.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Evaluation System}
@@ -302,6 +314,7 @@
         \item {The tasks we cover are open-ended, which are more realistic and practical.}
         \item {Evaluation is also more objective and fine-grained.}
     \end{itemize}
+    \input{./tables/statistics.tex}
 \end{frame}
 
 \section{Experiment}
@@ -348,6 +361,12 @@
         \item {On benchmarks focusing on Chinese knowledge (C-eval, CMMLU, and GAOKAO), smaller models achieve similar or even better performance compared to GPT-3.5-turbo.}
         \item {On challenging benchmarks like complex reasoning (BBH, GSM8k) and programming ability (HumanEval), there is a lack of distinction between smaller models.}
     \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.42\textheight]{./images/figures/discrim.pdf}
+        \captionsetup{font={tiny}}
+        \caption{The performance of models on mainstream benchmarks.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Fine-grained Evaluation}
@@ -355,6 +374,12 @@
         \item {Different models have different strengths for different criteria.}
         \item {Different models also excel in specific tasks.}
     \end{itemize}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{./images/figures/discrim_v1.pdf}
+        \captionsetup{font={tiny}}
+        \caption{The performance of LLMs grounded on the same base model regarding different tasks and criteria.}
+    \end{figure}
 \end{frame}
 
 \section{Conclusion}
