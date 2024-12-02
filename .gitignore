@@ -1,12 +1,12 @@
 .cz-config.js
 
+papers/pdf/*
 !papers/pdf/.gitkeep
 !papers/pdf/*.pdf
-papers/pdf/
 
+papers/src/*
 !papers/src/.gitkeep
 !papers/src/*.tar.gz
-papers/src/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
