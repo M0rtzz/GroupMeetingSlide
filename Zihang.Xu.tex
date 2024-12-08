@@ -26,18 +26,7 @@
 }
 \usepackage{HUST}
 
-\author{徐梓航}
-\title{Can Large Language Models Understand Real-World Complex Instructions?}
-\subtitle{
-    \scriptsize
-    Qianyu He\scriptsize\texorpdfstring{$^{@FDU}$}{\textit{@FDU}}
-    \normalfont
-    , Jie Zeng\scriptsize\texorpdfstring{$^{@FDU}$}{\textit{@FDU}}
-    \normalfont
-    , et al. AAAI, 2024
-}
-\institute{华中科技大学计算机科学与技术学院}
-\date{2024年12月02日}
+\setCJKfamilyfont{hei}{SimHei}
 
 \def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
 \def\env#1{\texttt{\color{blue}\footnotesize #1}}
@@ -57,8 +46,21 @@
     frame=shadowbox,
 }
 
+\author{徐梓航}
+\title{Benchmarking Large Language Models in Retrieval-Augmented Generation}
+\subtitle{
+    \scriptsize
+    Jiawei Chen\scriptsize\texorpdfstring{$^{@ISCAS}$}{\textit{@ISCAS}}
+    \normalfont
+    , Hongyu Lin\scriptsize\texorpdfstring{$^{@ISCAS
+    }$}{\textit{@ISCAS}}
+    \normalfont
+    , et al. AAAI, 2024
+}
+\institute{华中科技大学计算机科学与技术学院}
+\date{2024年12月09日}
+
 \begin{document}
-\setCJKfamilyfont{hei}{SimHei}
 
 \begin{frame}
     \titlepage
@@ -83,72 +85,6 @@
     \newline
     \newline
     现有的基准测试不足以评估LLMs对评估复杂指令的能力，为此，论文提出了CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)。
-\end{frame}
-
-\subsection{Complex Instructions}
-
-\begin{frame}
-    Instruction generally consists of two parts:
-    \begin{itemize}
-        \item {Task description (mandatory)}
-        \item {Input text (optional)}
-    \end{itemize}
-
-    Two categories of complex instructions:
-    \begin{itemize}
-        \item {complex task descriptions}
-        \item {complex input}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    Regarding complex task descriptions, models need to undertake multiple tasks and there can be diverse restrictions describing the task:
-    \begin{itemize}
-        \item {semantics constraints}
-        \item {format constraints}
-        \item {quantity constraints}
-    \end{itemize}
-    Regarding complex input, the input text generally have:
-    \begin{itemize}
-        \item {long context}
-        \item {noise}
-        \item {error accumulation caused by pipeline method}
-        \item {heterogeneous information (异构信息) \{e.g. a combination of structured and unstructured data\}}
-        \item {in the form of multi-turn}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \textcolor{red}{The complexity of real-world instructions accounts for prevalent errors observed in LLMs.} LLMs May:
-    \begin{itemize}
-        \item {Ignore semantic constraints from task description.}
-        \item {Generate answers in incorrect format.}
-        \item {Violate the length or sample count constraints, especially when multiple tasks are required to be performed.}
-        \item {Models can be unfaithful to the input text, especially when it is long, noisy, heterogeneous or in the form of multi-turn.}
-    \end{itemize}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[height=.39\textheight]{./images/figures/intro_v1.pdf}
-        \captionsetup{font={tiny}}
-        \caption{Real-world applications often involve a diverse range of complex instructions.}
-    \end{figure}
-\end{frame}
-
-\subsection{Existing Benchmarks}
-
-\begin{frame}
-    Existing benchmarks are insufficient for effectively assessing the ability of LLMs to understand complex instructions:
-    \begin{itemize}
-        \item {close-ended (封闭式)}
-        \item {Contain common and simple instructions, which fail to mirror the complexity of real-world instructions.}
-    \end{itemize}
-    They only encompass isolated features:
-    \begin{itemize}
-        \item {count restriction}
-        \item {semantic restriction}
-        \item {long text understanding}
-    \end{itemize}
-    Real-world instructions comprehensively cover these features. Overall, none of the existing benchmarks systematically study the complex instructions understanding ability of LLMs.
 \end{frame}
 
 \section{Challenge}
