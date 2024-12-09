@@ -9,6 +9,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{
     ctex,
+    natbib,
     xeCJK,
     xcolor,
     amsmath,
@@ -75,258 +76,155 @@
     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
-\section{Introduction}
-
-\begin{frame}{Can Large Language Models Understand Real-World Complex Instructions?}
-    LLMs 难以处理复杂的指令，这些指令可以是需要多个任务和约束的复杂任务描述，也可以是包含长上下文、噪声、异构信息和多回合格式的复杂输入。
-    \newline
-    \newline
-    由于这些特性，LLM常常忽略任务描述中的语义约束，生成错误的格式，违反长度或样本计数约束，并且对输入文本不忠实。
-    \newline
-    \newline
-    现有的基准测试不足以评估LLMs对评估复杂指令的能力，为此，论文提出了CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)。
-\end{frame}
-
-\section{Challenge}
+\section{Introduction \& Challenge}
 
 \begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.75\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
     \begin{itemize}
-        \item {Complex instructions in real-world scenarios are open-ended, thus the criteria commonly used for close-ended benchmarks are not suitable in such cases.}
-        \item {Many studies adopt GPT4 evaluation for automated open-ended assessment, which introduces bias problems.}
-        \item {The binary pass rate adopted by the benchmarks containing complex instructions is strict and coarsegrained, resulting in universally low scores for smaller LLM without discrimination.}
+        \item {\colorbox{yellow}{噪声鲁棒性}（Noise Robustness）：能否有效处理和忽略无用信息。}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{CELLO (\textcolor{red}{C}ompl\textcolor{red}{E}x instruction understanding ability of \textcolor{red}{L}arge \textcolor{red}{L}anguage M\textcolor{red}{O}dels)}
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
     \begin{itemize}
-        \item {pioneer}
-        \item {Propose a two-stage framework for constructing the evaluation dataset for LLM's complex instruction understanding.}
-        \item {Design four evaluation criteria and corresponding automatic metrics for assessing LLMs' ability to understand complex instructions in a comprehensive and discriminative way.}
-        \item {Tested the benchmark testing framework.}
+        \item {\colorbox{red}{负面拒绝}（Negative Rejection）：确保在没有足够信息时不会生成不准确或虚假的答案。}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\colorbox{red}{信息整合}（Information Integration）：测试处理多源信息的能力。}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.75\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\colorbox{red}{反事实鲁棒性}（Counterfactual Robustness）：在面对误导性信息时能够作出正确的判断。}
     \end{itemize}
 \end{frame}
 
 \section{Methods}
 
-\subsection{Related Work}
-
-\begin{frame}{Related Works}
-    \begin{itemize}
-        \item {Evaluation for LLMs}
-        \item {Complex Instruction Following}
-        \item {Evaluation for Constrained Instructions}
-    \end{itemize}
-\end{frame}
-
-\subsection{CELLO Benchmark}
-
-\begin{frame}{Dataset Construction}
-    Diversify the collected complex instructions through In-breadth Evolution and complicate the collected simple instructions through In-breadth Evolution.
-    \newline
-    \large\bfseries{Data Source and Selected Tasks}
-    \newline
-    \normalfont
-    Include common NLP tasks found in existing benchmarks, while incorporating instructions with more complex task descriptions or input beyond those benchmarks.
-\end{frame}
-
-\begin{frame}{Dataset Construction}
-    CELLO include nine tasks, classified into six categories:
-    \begin{itemize}
-        \item {Complex NLP Tasks}
-            \begin{itemize}
-                \item {long text summarization}
-                \item {long text closed-domain question answering}
-                \item {long text keywords extraction}
-                \item {complex information extraction}
-            \end{itemize}
-        \item {Meta-prompt}
-        \item {Planning}
-        \item {Structured Input}
-        \item {Well-guided Writing}
-        \item {Detailed Brainstorming}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Dataset Construction}
-    \large\bfseries{Data Evolution}
-    \newline
-    \normalfont
-    The collected complex instructions have two limitations:
-    \begin{itemize}
-        \item {For those collected from real-world projects, the human-elaborated task descriptions are complex but alike.}
-        \item {For those collected from usage logs, many simple instructions are not effectively utilized.}
-    \end{itemize}
-    Introduce two perspectives to evolve data, thereby achieving a more robust and reliable evaluation:
-    \begin{itemize}
-        \item {In-breadth Evolution (Aims to diversify the collected complex instructions)}
-            \begin{itemize}
-                \item {task description relocation}
-                \item {task description paraphrasing}
-                \item {task emulation}
-            \end{itemize}
-
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Dataset Construction}
-    \begin{itemize}
-        \item {In-depth Evolution (Aims to complicate the simple instructions to increase the data scale)}
-            \begin{itemize}
-                \item {constraints addition}
-                \item {multi-round interaction}
-            \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation System}
-    \large\bfseries{Criteria}
-    \newline
-    \normalfont
-    Encompass common errors made by models:
-    \begin{itemize}
-        \item {count limit}
-        \item {answer format}
-        \item {task-prescribed phrases}
-        \item {input-dependent query}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Evaluation System}
-    \large\bfseries{Evaluation Metrics}
-    \newline
-    \normalfont
-    每个样本$s_i$由指令$I_i$、模型答案$a_i$和给定的历史$h_i$组成，其中$h_i$是多轮对话中的前几轮$\{(I_0, a_0'), ..., (I_i−1', a_i−1')\}$。对于每个样本$s$，其每个标准的分数由多个子分数$C$组成，$C$是一个包含$\{c_1, c_2, ..., c_i\}$的集合。
+\begin{frame}
     \begin{figure}[h]
         \centering
-        \includegraphics[height=.43\textheight]{./images/figures/framework.pdf}
+        \includegraphics[height=.75\textheight]{./images/figures/data.pdf}
         \captionsetup{font={tiny}}
-        \caption{Eight features for complex instructions, an evaluation dataset covering nine tasks, four evaluation criteria along with their corresponding metrics.}
+        \caption{The process of data generation.}
     \end{figure}
-\end{frame}
-
-\begin{frame}{Evaluation System}
-    \large\bfseries{Count Limit}
-    \newline
-    \normalfont
-    Four sub-scores:
     \begin{itemize}
-        \item {word count score}
-        \item {sentence count score}
-        \item {sample count score}
-        \item {revise score}
+        \item {\bfseries{QA instances generation}}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Evaluation System}
-    \large\bfseries{Answer Format}
-    \newline
-    \normalfont
-    Two sub-scores:
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.75\textheight]{./images/figures/data.pdf}
+        \captionsetup{font={tiny}}
+        \caption{The process of data generation.}
+    \end{figure}
     \begin{itemize}
-        \item {parseability (模型输出是否可解析，取0或1)}
-        \item {keywords (计算模型输出中包含的关键词数量后/总数)}
-    \end{itemize}
-    最终两者求均值。
-\end{frame}
-
-\begin{frame}{Evaluation System}
-    \large\bfseries{Input-dependent Query}
-    \newline
-    \normalfont
-    Two sub-scores:
-    \begin{itemize}
-        \item {keywords($f_{keywords}(a_i, l_q)$, the scoring keywords $l_q$ are extracted from input text)}
-        \item {COPYBLEU (值随着模型输出与输入文本相似度的增加而减少，即如果模型输出与输入文本过于相似，COPYBLEU的值会较低，从而对最终得分产生负面影响)}
+        \item {\bfseries{Retrieve using search engine}}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Evaluation System}
-    \large\bfseries{Task-prescribed Phrases}
-    \newline
-    \normalfont
-    The more mandatory phrases covered in the answers, the better the model follows complex instructions.
-    \newline
-    \newline
-    Keywords($f_{keywords}(a_i, l_t)$) is applied where $l_t$ is the scoring keywords extracted from the task description.
-\end{frame}
-
-\begin{frame}{Evaluation of the Benchmark}
-    根据四个标准，每个样本由三个annotators标记。具体地说，只有当至少两个annotators在标准计数限制和输出格式可解析性上达成一致时，我们才保留样本。对于涉及关键字覆盖率的标准，我们只保留至少两个annotators一致同意的关键字。
-\end{frame}
-
-\begin{frame}{Statistics of the Benchmark}
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.75\textheight]{./images/figures/data.pdf}
+        \captionsetup{font={tiny}}
+        \caption{The process of data generation.}
+    \end{figure}
     \begin{itemize}
-        \item {Dataset has two categories depending on whether the criteria are mainly in the task description or the input text.}
-        \item {CELLO benchmark is the first to systematically test LLMs' ability to follow complex instructions, which are generally longer and more complex than other benchmarks.}
-        \item {The tasks we cover are open-ended, which are more realistic and practical.}
-        \item {Evaluation is also more objective and fine-grained.}
+        \item {\bfseries{Testbeds construction for each ability}}
     \end{itemize}
-    \input{./tables/statistics.tex}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\bfseries{Accuracy}: Measure noise robustness and information integration.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\bfseries{Rejection rate}: Measure negative rejection.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\bfseries{Error detection rate}: Measure counterfactual robustness.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[height=.74\textheight]{./images/figures/intro.pdf}
+        \captionsetup{font={tiny}}
+        \caption{Four kinds of abilities required for ARG of LLMs.}
+    \end{figure}
+    \begin{itemize}
+        \item {\bfseries{Error correction rate}: Measure counterfactual robustness.}
+    \end{itemize}
 \end{frame}
 
 \section{Experiment}
 
-\begin{frame}{Evaluated Models}
-    These models are categorized into three groups:
-    \begin{itemize}
-        \item {Chinese-oriented Models (From Scratch, FS) \{Trained entirely from scratch using Chinese corpora\}}
-        \item {Chinese-oriented Models (Continue Pretraining, CP) \{Continue pretraining on Chinese corpora utilizing an English-oriented base model\}}
-        \item {English-oriented Models}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Task-categorized Performance}
-    \begin{itemize}
-        \item {General Comparisons}
-            \begin{itemize}
-                \item {Complex instruction comprehension is not language-dependent.}
-                \item {There is a strong correlation between the ability to comprehend complex instructions and the instruction.}
-            \end{itemize}
-        \item {Complex Task Description}
-            \begin{itemize}
-                \item {The ability to understand complex task descriptions can transfer across different languages.}
-                \item {The supported text context length does not significantly impact the ability to comprehend complex task descriptions.}
-            \end{itemize}
-        \item {Complex Input Text}
-            \begin{itemize}
-                \item {More Chinese training data assists the models in comprehending long and noisy Chinese texts.}
-                \item {Within \textcolor{red}{the same model series}, larger scales generally improve performance, while longer supported context length can result in performance drops in many cases.}
-            \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Criteria-categorized Performance}
-    \begin{itemize}
-        \item {Regarding \textcolor{red}{Answer format}, the English-oriented Models significantly perform better than Chinese-oriented Models. This demonstrates the English-oriented Models' ability to follow few-shot examples and generate code, as well as partially explains why their complex instruction-following ability can transfer across languages.}
-        \item {For \textcolor{red}{Task-prescribed phrases}, Chinese data helps the models understand Chinese semantic restrictions.}
-        \item {Finally, the performance differences between models for \textcolor{red}{Count limit} criteria are not big compared to other criteria, which shows that the models have similar comprehension of numerical concepts.}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Comparisons between Benchmarks}
-    \begin{itemize}
-        \item {On benchmarks focusing on Chinese knowledge (C-eval, CMMLU, and GAOKAO), smaller models achieve similar or even better performance compared to GPT-3.5-turbo.}
-        \item {On challenging benchmarks like complex reasoning (BBH, GSM8k) and programming ability (HumanEval), there is a lack of distinction between smaller models.}
-    \end{itemize}
+\begin{frame}
     \begin{figure}[h]
         \centering
-        \includegraphics[height=.42\textheight]{./images/figures/discrim.pdf}
+        \includegraphics[height=.6\textheight , width=0.95\textwidth]{./images/figures/io.pdf}
         \captionsetup{font={tiny}}
-        \caption{The performance of models on mainstream benchmarks.}
+        \caption{Provide 5 external documents for each question.}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Fine-grained Evaluation}
-    \begin{itemize}
-        \item {Different models have different strengths for different criteria.}
-        \item {Different models also excel in specific tasks.}
-    \end{itemize}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.9\linewidth]{./images/figures/discrim_v1.pdf}
-        \captionsetup{font={tiny}}
-        \caption{The performance of LLMs grounded on the same base model regarding different tasks and criteria.}
-    \end{figure}
+\begin{frame}
+    \input{./tables/1.tex}
 \end{frame}
 
 \section{Conclusion}
