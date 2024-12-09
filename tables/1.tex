@@ -1,0 +1,17 @@
+\begin{table}
+    \centering
+    % \setlength{\belowcaptionskip}{-0.5cm}
+    \resizebox{0.8\textwidth}{!}{
+        \begin{tabular}{@{}l|lllll|lllll@{}}
+            \toprule
+            \multicolumn{1}{c|}{}             & \multicolumn{5}{c|}{English}                                                                                                   & \multicolumn{5}{c}{Chinese}                                                                                                   \\ \midrule
+            \multicolumn{1}{c|}{Noise Ratio}   & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{0.2} & \multicolumn{1}{c}{0.4} & \multicolumn{1}{c}{0.6} & \multicolumn{1}{c|}{0.8} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{0.2} & \multicolumn{1}{c}{0.4} & \multicolumn{1}{c}{0.6} & \multicolumn{1}{c}{0.8} \\ \midrule
+            ChatGPT~\citep{chatgpt}           & \textbf{96.33}        & \textbf{94.67}          & \textbf{94.00}          & \textbf{90.00}          & \textbf{76.00}           & \textbf{95.67}        & \textbf{94.67}          & \textbf{91.00}          & \textbf{87.67}          & \textbf{70.67}          \\
+            ChatGLM-6B~\citep{chatglm}        & 93.67                 & 90.67                   & 89.33                   & 84.67                   & 70.67                    & 94.33                 & 90.67                   & 89.00                   & 82.33                   & 69.00                   \\
+            ChatGLM2-6B~\citep{chatglm2}      & 91.33                 & 89.67                   & 83.00                   & 77.33                   & 57.33                    & 86.67                 & 82.33                   & 76.67                   & 72.33                   & 54.00                   \\
+            Vicuna-7B-v1.3~\citep{vicuna2023} & 87.67                 & 83.33                   & 86.00                   & 82.33                   & 60.33                    & 85.67                 & 82.67                   & 77.00                   & 69.33                   & 49.67                   \\
+            Qwen-7B-Chat~\citep{qwen}         & 94.33                 & 91.67                   & 91.00                   & 87.67                   & 73.67                    & 94.00                 & 92.33                   & 88.00                   & 84.33                   & 68.67                   \\
+            BELLE-7B-2M~\citep{BELLE}         & 83.33                 & 81.00                   & 79.00                   & 71.33                   & 64.67                    & 92.00                 & 88.67                   & 85.33                   & 78.33                   & 67.68                   \\ \bottomrule
+    \end{tabular}}
+    \caption{The experimental result of noise robustness measured by accuracy (\%) under different noise ratios. We can see that the increasing noise rate poses a challenge for RAG in LLMs.}
+\end{table}
