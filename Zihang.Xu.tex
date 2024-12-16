@@ -60,7 +60,7 @@
     , et al. AAAI, 2024
 }
 \institute{华中科技大学计算机科学与技术学院}
-\date{2024年12月09日}
+\date{2024年12月16日}
 
 \begin{document}
 
@@ -129,6 +129,8 @@
 
 \section{Methods}
 
+\subsection{Data construction}
+
 \begin{frame}
     \begin{figure}[h]
         \centering
@@ -164,6 +166,8 @@
         \item {\bfseries{Testbeds construction for each ability}}
     \end{itemize}
 \end{frame}
+
+\subsection{Evaluation metrics}
 
 \begin{frame}
     \begin{figure}[h]
@@ -215,26 +219,73 @@
 
 \section{Experiment}
 
-\begin{frame}
+\begin{frame}{Task formats}
     \begin{figure}[h]
         \centering
-        \includegraphics[height=.6\textheight , width=0.95\textwidth]{./images/figures/io.pdf}
+        \includegraphics[height=.6\textheight , width=1\textwidth]{./images/figures/io.pdf}
         \captionsetup{font={tiny}}
         \caption{Provide 5 external documents for each question.}
     \end{figure}
 \end{frame}
 
+\subsection{Results on Noise Robustness}
+
 \begin{frame}
-    % \input{./tables/1.tex}
+    \input{./tables/1.tex}
+\end{frame}
+
+\begin{frame}{Error Analysis}
+    \input{./tables/2.tex}
+\end{frame}
+
+\subsection{Results on Negative Rejection testbed}
+
+\begin{frame}
+    \input{./tables/3.tex}
+    LLMs fail to strictly follow instructions, and they often generate unpredictable responses, which make it hard to use them as state triggers (such as for recognizing rejection).
+\end{frame}
+
+\begin{frame}
+    \input{./tables/4.tex}
+\end{frame}
+
+\subsection{Results on Information Integration testbed}
+
+\begin{frame}
+    \input{./tables/5.tex}
+    LLMs have a weak information integration ability, which in turn affects its noise robustness.
+\end{frame}
+
+\begin{frame}{{Error Analysis}}
+    \input{./tables/6.tex}
+    \begin{enumerate}
+        \item {Merging Error ($28\%$ of the total)}
+        \item {Ignoring Error ($28\%$ of the total)}
+        \item {Misalignment Error ($6\%$ of the total)}
+    \end{enumerate}
+\end{frame}
+
+\subsection{Results on Count Robustness testbed}
+
+\begin{frame}
+    \input{./tables/7.tex}
 \end{frame}
 
 \section{Conclusion}
 
 \begin{frame}
+    Evaluated four abilities of retrievalaugmented generation in LLMs:
     \begin{itemize}
-        \item {complex instructions following ability of LLMs}
-        \item {CELLO Benchmark}
-        \item {Conduct extensive experiments to compare the performance of representative models.}
+        \item {噪声鲁棒性（Noise Robustness）}
+        \item {负面拒绝（Negative Rejection）}
+        \item {信息整合（Information Integration）}
+        \item {反事实鲁棒性（Counterfactual Robustness）}
+    \end{itemize}
+    RetrievalAugmented Generation Benchmark (RGB):
+    \begin{itemize}
+        \item {The instances of RGB are generated from latest news articles and the external documents obtained from search engines.}
+        \item {Current LLMs have limitations in the 4 abilities. This indicates that there is still a significant amount of work needed to effectively apply RAG to LLMs.}
+        \item {To ensure accurate and reliable responses from LLMs, it is crucial to exercise caution and carefully design for RAG.}
     \end{itemize}
 \end{frame}
 
@@ -253,12 +304,10 @@
 
 \begin{frame}{思考}
     \begin{itemize}
-        \item {\bfseries{模型的适应性和泛化能力：}\normalfont
-            论文中的实验主要关注模型在特定数据集上的表现。未来的研究可以探讨模型在面对新的、未见过的复杂指令时的适应性和泛化能力，以及如何通过持续学习或迁移学习来提高这些能力。}
-        \item {\bfseries{多模态和跨领域指令的理解：}\normalfont
-            随着多模态学习和跨领域应用的兴起，未来的研究可以考虑如何评估和提高模型在处理包含图像、声音等多种模态信息的复杂指令时的性能。}
-        \item {\bfseries{实时性能和资源消耗：}\normalfont
-            论文中的评估主要关注模型的准确性和完成度。在实际应用中，模型的实时性能和资源消耗（如计算时间、内存使用等）也是非常重要的考量因素。未来的工作可以探讨如何在保证性能的同时优化模型的效率。}
+        \item {\bfseries{开发专门模块：}\normalfont
+            设计专门用于检测和过滤噪声及虚假信息的模块，帮助LLMs更好地筛选有用信息，减少因误信不良信息而导致的错误}
+        \item {\bfseries{优化提示工程：}\normalfont
+            利用更精细的提示策略指导LLMs如何处理特定类型的任务，例如明确指示其在遇到不确定证据时应采取谨慎态度。}
     \end{itemize}
 \end{frame}
 
