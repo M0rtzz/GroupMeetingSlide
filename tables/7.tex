@@ -1,0 +1,13 @@
+\begin{table}[]
+    \centering
+    % \setlength{\belowcaptionskip}{-0.5cm}
+    \resizebox{0.33\textwidth}{!}{
+        \begin{tabular}{@{}c|ccccc@{}}
+            \toprule
+            & Acc & Acc$_{\text{doc}}$ & ED         & ED$^{*}$   & CR             \\ \midrule
+            ChatGPT-zh      & 91  & \textbf{17}        & 1          & 3          & 33.33          \\
+            Qwen-7B-Chat-zh & 77  & 12                 & 5          & 4          & 25.00          \\
+            ChatGPT-en      & 89  & 9                  & \textbf{8} & \textbf{7} & \textbf{57.14} \\ \bottomrule
+    \end{tabular}}
+    \caption{The result of counterfactual robustness. ACC is the accuracy (\%) of LLMs without external documents. ACC$_{\text{doc}}$ is the accuracy (\%) of LLMs with counterfactual documents. ED and ED$^{*}$ are error detection rates evaluated by exact matching and ChatGPT, respectively. CR is the error correction rate.}
+\end{table}

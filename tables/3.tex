@@ -1,0 +1,17 @@
+\begin{table}[]
+    \centering
+    % \setlength{\belowcaptionskip}{-0.5cm}
+    \resizebox{0.3\textwidth}{!}{
+        \begin{tabular}{@{}c|cc|cc@{}}
+            \toprule
+            Languages      & \multicolumn{2}{c|}{English}    & \multicolumn{2}{c}{Chinese}    \\ \midrule
+            & Rej            & Rej$^*$        & Rej           & Rej$^*$        \\ \midrule
+            ChatGPT        & 24.67          & \textbf{45.00} & 5.33          & \textbf{43.33} \\
+            ChatGLM-6B     & 9.00           & 25.00          & 6.33          & 17.00          \\
+            ChatGLM2-6B    & 10.33          & 41.33          & 6.33          & 36.33          \\
+            Vicuna-7B-v1.3 & 17.00          & 33.33          & 3.37          & 24.67          \\
+            Qwen-7B-Chat   & \textbf{31.00} & 35.67          & \textbf{8.67} & 25.33          \\
+            BELLE-7B-2M    & 5.67           & 32.33          & 5.33          & 13.67          \\ \bottomrule
+    \end{tabular}}
+    \caption{The result of negative rejection. Rej means the rejection rate (\%) and Rej$^*$ means the rejection rate evaluated by ChatGPT. We can see that negative rejection poses a challenge for RAG in LLMs.}
+\end{table}
